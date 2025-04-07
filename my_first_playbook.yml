@@ -1,0 +1,8 @@
+- name: Update the package List
+  hosts: web1
+  become: yes  # Use sudo
+  tasks:
+    - name: Update the package list
+      apt:
+        update_cache: yes
+
