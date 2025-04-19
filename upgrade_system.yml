@@ -1,0 +1,24 @@
+---
+- name: Upgrade Ubuntu Systems
+  hosts: web1
+  become: no  # Use sudo
+  tasks:
+    - name: Update the package list
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Upgrade all packages
+      apt:
+        upgrade: dist
+        autoremove: yes
+        autoclean: yes
+
+    - name: Reboot if required
+      reboot:
+        msg: "System rebooted by Ansible after upgrade"
+        connect_timeout: 5
+        reboot_timeout: 600
+        pre_reboot_delay: 0
+        post_reboot_delay: 30
+        test_command: whoami
